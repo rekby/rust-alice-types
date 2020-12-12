@@ -7,6 +7,7 @@ description = "Type description for serialize/deserialize request/responce in al
 license = "MIT"
 keywords = ["yandex", "alice"]
 categories = ["api-bindings", "parsing"]
+repository = "https://github.com/rekby/rust-alice-types"
 publish = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
