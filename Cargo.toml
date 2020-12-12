@@ -1,0 +1,16 @@
+[package]
+name = "alice_types"
+version = "0.1.0"
+authors = ["rekby <timofey.koolin@gmail.com>"]
+edition = "2018"
+description = "Type description for serialize/deserialize request/responce in alice's skills."
+license = "MIT"
+keywords = ["yandex", "alice"]
+categories = ["api-bindings", "parsing"]
+publish = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
