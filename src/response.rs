@@ -31,6 +31,7 @@ pub struct Response<SessionState=serde_json::Value> {
     pub end_session: bool,
 
     // https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html/
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub session_state:Option<SessionState>,
 }
 
