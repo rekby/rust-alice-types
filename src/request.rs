@@ -5,14 +5,19 @@ use crate::request::RequestInnerType::Unknown;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
-pub struct Request {
+pub struct Request<SessionState=serde_json::Value> {
     pub meta: Meta,
     pub request: RequestInner,
     pub session: Session,
     pub version: String,
+
+    // https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html/
+    #[serde(rename="state")]
+    pub session_state: Option<SessionState>,
 }
 
 #[derive(Default, Debug, Deserialize)]
+#[serde(default)]
 pub struct Meta {
     pub locale: String,
     pub timezone: String,
