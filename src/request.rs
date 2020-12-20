@@ -2,6 +2,7 @@
 
 use serde::{Deserialize,Serialize};
 use crate::request::RequestInnerType::Unknown;
+use std::collections::HashMap;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
@@ -45,6 +46,7 @@ pub struct RequestInner {
     pub request_type: RequestInnerType,
     pub markup: Markup,
     pub payload: serde_json::Value,
+    pub nlu: Nlu,
 }
 
 #[serde(untagged, from="String")]
@@ -81,6 +83,8 @@ pub struct Markup{
 pub struct Nlu {
     #[serde(default)]
     pub tokens: Vec<String>,
+    pub entities: Vec<NluEntity>,
+    pub intents: HashMap<String,Intent>
 }
 
 #[derive(Default, Debug, Deserialize)]
@@ -105,4 +109,9 @@ pub struct Session{
     session_id: String,
     user_id: String,
     message_id: i64,
+}
+
+#[derive(Default,Debug,Deserialize)]
+pub struct Intent {
+    pub slots: HashMap<String,NluEntity>
 }
