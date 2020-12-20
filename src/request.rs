@@ -1,6 +1,6 @@
 // https://yandex.ru/dev/dialogs/alice/doc/protocol.html
 
-use serde::Deserialize;
+use serde::{Deserialize,Serialize};
 use crate::request::RequestInnerType::Unknown;
 
 #[derive(Default, Debug, Deserialize)]
@@ -100,5 +100,9 @@ pub struct NluEntityTokens {
     pub end: u16,
 }
 
-#[derive(Default,Debug,Deserialize)]
-pub struct Session{}
+#[derive(Default,Debug,Deserialize,Serialize)]
+pub struct Session{
+    session_id: String,
+    user_id: String,
+    message_id: i64,
+}

@@ -8,22 +8,39 @@ use crate::request;
 pub struct Message<SessionState = serde_json::Value> {
     pub response: Response<SessionState>,
 
+    // for marusya https://vk.com/dev/marusia_skill_docs
+    pub session: Option<request::Session>,
+
     version: &'static str,
 }
 
 impl<SessionState> Message<SessionState>{
     pub fn new()->Self{
-        return Self::with_response(Response::<SessionState>::default())
-    }
-
-    pub fn with_response(resp: Response<SessionState>)->Self
-    {
         return Message{
-            response: resp,
+            response: Response::default(),
             version: "1.0",
+            session: Some(request::Session::default()),
         }
     }
+
+    pub fn from_request(req: request::Request<SessionState>)->Self{
+        let mut mess = Self::new();
+        mess.session = Some(req.session);
+        return mess;
+    }
+
+    pub fn with_response(mut self, resp: Response<SessionState>)->Self
+    {
+        self.response = resp;
+        return self;
+    }
+
+    pub fn with_session(mut self, session: request::Session)->Self{
+        self.session = Some(session);
+        return self;
+    }
 }
+
 
 #[derive(Serialize)]
 pub struct Response<SessionState=serde_json::Value> {
