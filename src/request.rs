@@ -1,8 +1,18 @@
 // https://yandex.ru/dev/dialogs/alice/doc/protocol.html
 
+use chrono::prelude as ch;
 use serde::{Deserialize,Serialize};
-use crate::request::RequestInnerType::Unknown;
-use std::collections::HashMap;
+use std::{
+    cell::Cell,
+    collections::HashMap
+};
+
+use crate::{
+    errors::{Error, Result},
+    request::RequestInnerType::Unknown,
+    yandex_types,
+};
+use crate::yandex_types::YandexDateTime;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
@@ -95,6 +105,54 @@ pub struct NluEntity{
     #[serde(rename="type")]
     pub entity_type: String,
     pub value: serde_json::Value,
+
+    ydt: Cell<Option<YandexDateTime>>,
+}
+
+impl NluEntity {
+    // https://yandex.ru/dev/dialogs/alice/doc/naming-entities.html#naming-entities__datetime
+    pub fn get_date_time<Tz: ch::TimeZone>(&self, now: ch::DateTime<Tz>)->Result<ch::DateTime<Tz>> {
+        if !self.is_date_time() {
+            return Err(Error::NoDateTime(self.entity_type.clone()))
+        }
+        return self.get_ydt()?.date_time(now);
+    }
+
+    pub fn is_date_time(&self)-> bool {
+        return self.entity_type.as_str() == "YANDEX.DATETIME"
+    }
+
+    pub fn has_date(&self)->bool {
+        if !self.is_date_time(){
+            return false;
+        }
+        if let Ok(ydt) = self.get_ydt() {
+            return ydt.has_date();
+        }
+        return false;
+    }
+
+    pub fn has_time(&self)->bool {
+        if !self.is_date_time(){
+            return false;
+        }
+        if let Ok(ydt) = self.get_ydt() {
+            return ydt.has_time();
+        }
+        return false;
+    }
+
+    fn get_ydt(&self)->Result<YandexDateTime>{
+        let res = match self.ydt.get() {
+            Some(ydt)=>ydt,
+            None=>{
+                let ydt: yandex_types::YandexDateTime = serde_json::from_value(self.value.clone())?;
+                self.ydt.replace(Some(ydt));
+                ydt
+            }
+        };
+        return Ok(res);
+    }
 }
 
 #[derive(Default, Debug, Deserialize)]
