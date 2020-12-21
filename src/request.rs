@@ -158,10 +158,13 @@ pub struct NluEntityTokens {
 }
 
 #[derive(Clone,Default,Debug,Deserialize,Serialize)]
+#[serde(default)]
 pub struct Session{
-    session_id: String,
-    user_id: String,
-    message_id: i64,
+    pub session_id: String,
+    pub skill_id: String,
+    pub user_id: String,
+    pub message_id: i64,
+    pub new: bool,
 }
 
 #[derive(Default,Debug,Deserialize)]

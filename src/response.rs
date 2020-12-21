@@ -52,6 +52,13 @@ pub struct Response<SessionState=serde_json::Value> {
     pub session_state:Option<SessionState>,
 }
 
+impl<SessionState> Response<SessionState>{
+    pub fn with_text(mut self, text: String)->Self{
+        self.text = text;
+        return self;
+    }
+}
+
 impl<SessionState> Default for Response<SessionState>{
     fn default()->Self{
         return Response::<SessionState>{
@@ -60,10 +67,6 @@ impl<SessionState> Default for Response<SessionState>{
             session_state: None,
         }
     }
-}
-
-pub fn new_response()->Response<serde_json::Value>{
-    return Response::default()
 }
 
 impl<SessionState> Response<SessionState>{
