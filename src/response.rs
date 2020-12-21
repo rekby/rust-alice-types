@@ -23,9 +23,9 @@ impl<SessionState> Message<SessionState>{
         }
     }
 
-    pub fn from_request(req: request::Request<SessionState>)->Self{
+    pub fn from_request(req: &request::Request<SessionState>)->Self{
         let mut mess = Self::new();
-        mess.session = Some(req.session);
+        mess.session = Some(req.session.clone());
         return mess;
     }
 

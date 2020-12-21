@@ -1,6 +1,6 @@
 [package]
 name = "alice_types"
-version = "0.2.0"
+version = "0.0.2"
 authors = ["rekby <timofey.koolin@gmail.com>"]
 edition = "2018"
 description = "Type description for serialize/deserialize request/responce in alice's skills."

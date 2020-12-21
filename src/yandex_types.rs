@@ -2,7 +2,8 @@ use serde::Deserialize;
 use chrono::{prelude as ch, Datelike, Timelike};
 use crate::errors::{Error, Result};
 
-#[derive(Clone, Copy, Default,Debug,Deserialize)]
+#[derive(Clone, Copy, Default, Debug, Deserialize)]
+#[serde(default)]
 pub struct YandexDateTime {
     pub year: Option<i32>,
     pub year_is_relative: bool,

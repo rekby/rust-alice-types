@@ -9,7 +9,6 @@ use std::{
 
 use crate::{
     errors::{Error, Result},
-    request::RequestInnerType::Unknown,
     yandex_types,
 };
 use crate::yandex_types::YandexDateTime;
@@ -53,7 +52,7 @@ pub struct InterfaceAccountLinking{}
 pub struct RequestInner {
     pub command: String,
     pub original_utterance: String,
-    pub request_type: RequestInnerType,
+    pub request_type: Option<RequestInnerType>,
     pub markup: Markup,
     pub payload: serde_json::Value,
     pub nlu: Nlu,
@@ -65,10 +64,6 @@ pub enum RequestInnerType {
     SimpleUtterance,
     ButtonPressed,
     Unknown(String),
-}
-
-impl Default for RequestInnerType{
-    fn default() ->Self{return Unknown("default".to_string())}
 }
 
 impl From<String> for RequestInnerType{
@@ -162,7 +157,7 @@ pub struct NluEntityTokens {
     pub end: u16,
 }
 
-#[derive(Default,Debug,Deserialize,Serialize)]
+#[derive(Clone,Default,Debug,Deserialize,Serialize)]
 pub struct Session{
     session_id: String,
     user_id: String,
