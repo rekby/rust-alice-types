@@ -15,7 +15,7 @@ use crate::yandex_types::YandexDateTime;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
-pub struct Request<SessionState=serde_json::Value> {
+pub struct Request<SessionState: Clone =serde_json::Value> {
     pub meta: Meta,
     pub request: RequestInner,
     pub session: Session,
