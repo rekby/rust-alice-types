@@ -58,8 +58,8 @@ pub struct RequestInner {
     pub nlu: Nlu,
 }
 
-#[serde(untagged, from="String")]
 #[derive(PartialEq, Debug, Deserialize)]
+#[serde(untagged, from="String")]
 pub enum RequestInnerType {
     SimpleUtterance,
     ButtonPressed,

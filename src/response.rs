@@ -57,6 +57,10 @@ impl<SessionState> Response<SessionState>{
         self.text = text;
         return self;
     }
+    pub fn with_session_end(mut self)->Self{
+        self.end_session = true;
+        return self;
+    }
 }
 
 impl<SessionState> Default for Response<SessionState>{
