@@ -15,15 +15,22 @@ use crate::yandex_types::YandexDateTime;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
-pub struct Request<SessionState: Clone =serde_json::Value> {
+pub struct Request<SessionState=serde_json::Value, UserState=serde_json::Value> {
     pub meta: Meta,
     pub request: RequestInner,
     pub session: Session,
     pub version: String,
 
-    // https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html/
-    #[serde(rename="state")]
-    pub session_state: Option<SessionState>,
+    pub state: State<SessionState, UserState>,
+}
+
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct State<SessionState, UserState> {
+    // https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html#store-session
+    pub session: Option<SessionState>,
+
+    // https://yandex.ru/dev/dialogs/alice/doc/session-persistence.html#store-between-sessions
+    pub user: Option<UserState>,
 }
 
 #[derive(Default, Debug, Deserialize)]
