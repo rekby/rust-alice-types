@@ -15,9 +15,9 @@ use crate::yandex_types::YandexDateTime;
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
-pub struct Request<SessionState=serde_json::Value, UserState=serde_json::Value> {
+pub struct IncomingMessage<SessionState=serde_json::Value, UserState=serde_json::Value> {
     pub meta: Meta,
-    pub request: RequestInner,
+    pub request: Request,
     pub session: Session,
     pub version: String,
 
@@ -56,7 +56,7 @@ pub struct InterfaceAccountLinking{}
 
 #[derive(Default, Debug, Deserialize)]
 #[serde(default)]
-pub struct RequestInner {
+pub struct Request {
     pub command: String,
     pub original_utterance: String,
 

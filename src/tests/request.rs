@@ -97,7 +97,7 @@ fn deserialize_full_request() {
   "version": "1.0"
 }"#;
 
-    let req: Request = serde_json::from_str(req_s).expect("deserialize request correct");
+    let req: IncomingMessage = serde_json::from_str(req_s).expect("deserialize request correct");
     assert_eq!(req.meta.locale, "ru-RU");
     assert_eq!(req.meta.timezone, "Europe/Moscow");
     assert_eq!(req.meta.client_id, "ru.yandex.searchplugin/5.80 (Samsung Galaxy; Android 4.4)");

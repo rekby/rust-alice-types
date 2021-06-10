@@ -56,7 +56,7 @@ impl<SessionState, UserState> Message<SessionState, UserState> {
 }
 
 impl<SessionState: Clone, UserState> Message<SessionState, UserState>{
-    pub fn from_request(req: &request::Request<SessionState, UserState>)->Self{
+    pub fn from_request(req: &request::IncomingMessage<SessionState, UserState>) ->Self{
         let mut mess = Self::new();
         mess.session = Some(req.session.clone());
         mess.session_state = req.state.session.clone();
