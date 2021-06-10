@@ -3,7 +3,7 @@ pub mod request;
 pub mod errors;
 mod yandex_types;
 
-pub use request::Request;
+pub use request::*;
 pub use response::{Message, Response};
 
 #[cfg(test)]

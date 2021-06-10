@@ -59,6 +59,8 @@ pub struct InterfaceAccountLinking{}
 pub struct RequestInner {
     pub command: String,
     pub original_utterance: String,
+
+    #[serde(rename="type")]
     pub request_type: Option<RequestInnerType>,
     pub markup: Markup,
     pub payload: serde_json::Value,
@@ -92,8 +94,8 @@ pub struct Markup{
 }
 
 #[derive(Default, Debug, Deserialize)]
+#[serde(default)]
 pub struct Nlu {
-    #[serde(default)]
     pub tokens: Vec<String>,
     pub entities: Vec<NluEntity>,
     pub intents: HashMap<String,Intent>
