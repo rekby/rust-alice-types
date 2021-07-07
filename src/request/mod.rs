@@ -13,7 +13,7 @@ use crate::{
 };
 use crate::yandex_types::YandexDateTime;
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct IncomingMessage<SessionState=serde_json::Value, UserState=serde_json::Value> {
     pub meta: Meta,
@@ -33,7 +33,7 @@ pub struct State<SessionState, UserState> {
     pub user: Option<UserState>,
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Meta {
     pub locale: String,
@@ -42,19 +42,19 @@ pub struct Meta {
     pub interfaces: Interfaces,
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 pub struct Interfaces {
     pub screen: Option<InterfaceScreen>,
     pub account_linking: Option<InterfaceAccountLinking>
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct InterfaceScreen {}
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct InterfaceAccountLinking{}
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Request {
     pub command: String,
@@ -67,7 +67,7 @@ pub struct Request {
     pub nlu: Nlu,
 }
 
-#[derive(PartialEq, Debug, Deserialize)]
+#[derive(PartialEq, Debug, Deserialize, Serialize)]
 #[serde(untagged, from="String")]
 pub enum RequestInnerType {
     SimpleUtterance,
@@ -87,13 +87,13 @@ impl From<String> for RequestInnerType{
     }
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Markup{
     pub dangerous_context: bool,
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct Nlu {
     pub tokens: Vec<String>,
@@ -101,7 +101,7 @@ pub struct Nlu {
     pub intents: HashMap<String,Intent>
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct NluEntity{
     pub tokens: NluEntityTokens,
@@ -159,7 +159,7 @@ impl NluEntity {
     }
 }
 
-#[derive(Default, Debug, Deserialize)]
+#[derive(Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct NluEntityTokens {
     pub start: u16,
@@ -176,7 +176,7 @@ pub struct Session{
     pub new: bool,
 }
 
-#[derive(Default,Debug,Deserialize)]
+#[derive(Default,Debug,Deserialize, Serialize)]
 pub struct Intent {
     pub slots: HashMap<String,NluEntity>
 }

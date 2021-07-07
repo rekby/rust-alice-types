@@ -1,8 +1,8 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use chrono::{prelude as ch, Datelike, Timelike};
 use crate::errors::{Error, Result};
 
-#[derive(Clone, Copy, Default, Debug, Deserialize)]
+#[derive(Clone, Copy, Default, Debug, Deserialize, Serialize)]
 #[serde(default)]
 pub struct YandexDateTime {
     pub year: Option<i32>,
